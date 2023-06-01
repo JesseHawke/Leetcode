@@ -1,0 +1,108 @@
+58. Length of Last Word
+
+Easy
+
+Given a string s consisting of words and spaces, return the length of the last word in the string.
+
+A word is a maximal 
+substring
+ consisting of non-space characters only.
+
+ 
+
+Example 1:
+
+Input: s = "Hello World"
+Output: 5
+Explanation: The last word is "World" with length 5.
+Example 2:
+
+Input: s = "   fly me   to   the moon  "
+Output: 4
+Explanation: The last word is "moon" with length 4.
+Example 3:
+
+Input: s = "luffy is still joyboy"
+Output: 6
+Explanation: The last word is "joyboy" with length 6.
+ 
+
+Constraints:
+
+1 <= s.length <= 104
+s consists of only English letters and spaces ' '.
+There will be at least one word in s.
+
+
+Inital solution using for loop from the front of the word:
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        
+        int length = 0;
+        int lastLength = 0;
+
+        for(int i = 0; i < s.size(); i++){
+
+            if(s[i] == ' '){
+                if(length != 0){
+                    lastLength = length;
+                    length = 0;
+                }
+            } else {
+                length++;
+            }
+
+        }
+
+        if(length != 0){
+            lastLength = length;
+        }
+
+        return(lastLength);
+
+    }
+};
+
+Solution looping from teh back of the word (faster):
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+       int count=0;
+       for(int n=s.length()-1;n>=0;n--){
+           if(s[n]!=' '){
+               count++;
+           }else if(s[n]==' '&& count!=0){
+               return count;
+           }
+       }
+       return count;
+    }
+};
+
+Creative solutions:
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int len =0;
+        while(s.back()==' ')
+            s.pop_back();
+        for(int i= s.length()-1;i>=0 && s[i] != ' ';i--)
+            len++;
+        return len;
+    }
+};
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int right=s.length()-1;
+        while(right>=0 && s[right]==' ') right--;
+        int left = right;
+        while(left>=0 && s[left]!=' ') left--;
+        return right - left;
+    }
+};
